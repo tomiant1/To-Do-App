@@ -60,6 +60,14 @@ class ToDoListViewController: UIViewController, UITableViewDelegate, UITableView
             
         }
         
+        else if let taskDic = notification.userInfo as NSDictionary? {
+            
+            guard let task = taskDic["Task"] as? ToDoItem else { return }
+            
+            toDoItem = task
+            
+        }
+        
         else {
             
             return

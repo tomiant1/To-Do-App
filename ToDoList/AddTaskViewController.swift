@@ -249,7 +249,9 @@ class AddTaskViewController: UIViewController {
         
         let toDoItem = ToDoItem(name: taskName, details: taskDetails, completionDate: completionDate)
         
-        NotificationCenter.default.post(name: NSNotification.Name.init("com.todoapp.addtask"), object: toDoItem)
+        let toDoDict: [String : ToDoItem] = ["Task" : toDoItem]
+        
+        NotificationCenter.default.post(name: NSNotification.Name.init("com.todoapp.addtask"), object: nil, userInfo: toDoDict)
         
         // Dismiss AddTaskViewController entirely if task specs completed successfully.
         
