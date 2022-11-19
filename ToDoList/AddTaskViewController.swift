@@ -217,11 +217,43 @@ class AddTaskViewController: UIViewController {
     
     @IBAction func addTaskDidTouch(_ sender: Any) {
         
-        // Input verifications
+        let validation = Validation()
         
-        guard let taskName = taskNameTextField.text, !taskName.isEmpty else {
+        var taskName: String = ""
+        
+        do {
             
-            reportError(title: "Invalid task name", message: "Task name is required")
+            taskName = try validation.validate(text: taskNameTextField.text, minLength: 5, maxLength: 10)
+            
+        }
+        
+        catch ValidationError.Empty {
+            
+            reportError(title: "Task Name Empty", message: "Task name field required.")
+            
+            return
+            
+        }
+        
+        catch ValidationError.Short {
+            
+            reportError(title: "Task Name Short", message: "Task name has to be between 5 and 10 characters.")
+            
+            return
+            
+        }
+        
+        catch ValidationError.Long {
+            
+            reportError(title: "Task Name Long", message: "Task name has to be between 5 and 10 characters.")
+            
+            return
+            
+        }
+        
+        catch {
+            
+            reportError(title: "Task Name Invalid", message: "Please check again.")
             
             return
             
@@ -229,7 +261,7 @@ class AddTaskViewController: UIViewController {
         
         if taskDetailsTextView.text.isEmpty {
             
-            reportError(title: "Task details are empty", message: "Please write inside")
+            reportError(title: "Task Details Empty", message: "Please write inside.")
             
             return
             
